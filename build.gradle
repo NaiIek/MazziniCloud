@@ -1,0 +1,36 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName='com.mazzini.StartServer'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.freemarker:freemarker:2.3.30'
+    implementation 'com.sparkjava:spark-core:2.9.3'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.h2database:h2:1.4.200'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtime 'io.jsonwebtoken:jjwt-impl:0.11.2', 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+    compile 'org.mindrot:jbcrypt:0.4'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.1'
+}
+test {
+    useJUnitPlatform()
+}
+
+jar {
+ manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': '1.0.0',
+                   'Main-Class': 'com.mazzini.StartServer'
+    }
+}
+
+sourceSets.main.java.srcDirs = ['src']
+sourceSets.test.java.srcDirs = ['src']

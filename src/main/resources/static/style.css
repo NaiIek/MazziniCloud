@@ -1,0 +1,121 @@
+/*********** CONTENU ************/
+/* Thème couleurs:              */
+/* bleu         #009EFA         */
+/* gris sombre  #4b4453         */
+/* gris sombre2 #3d4756         */
+/* gris clair   #B0A8B9         */
+
+header{
+    background-color: #009EFA;
+    padding-bottom: 1em;
+    border-bottom: 3px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+body{
+    background-color: #4b4453;
+}
+
+footer{
+    background-color: #009EFA;
+    border-top: 3px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1em;
+}
+
+h1{ 
+    padding-top: 0.6em;   
+    font-size:300%;
+    text-align: center;
+}
+
+h2{
+    font-size:180%;
+    text-align: center;
+    text-decoration: underline;
+    padding-bottom: 1em;
+}
+
+p{
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+input{
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+
+button{
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+
+header p{
+    position: fixed;
+    top: 0;
+    right: 1em;
+}
+
+footer img
+{
+    max-width: 5em;
+}
+
+#headNav{
+    margin-top: 3em;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#linkNav{
+    padding: 5px;
+    padding-bottom: 10px;
+    font-size: 200%;
+    display: inline-block;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: #4b4453;
+    margin-top: 5px;
+}
+
+#linkNav:hover{
+    background-color: #B0A8B9;
+}
+
+#linkNav a{
+    color: white;
+}
+
+#PageContent{
+    color: white;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    margin-left: 10%;
+    margin-right: 10%;
+
+    border: 3px solid black;
+    border-radius: 20px;
+    background-color: #3d4756;
+}
+
+#FileContent{
+    color: white;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    margin-left: 10%;
+    margin-right: 10%;
+
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: #4b4453;
+}
+
+.icon:hover{
+    background-color: rgba(34, 34, 34, 0.5);
+}
