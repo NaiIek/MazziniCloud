@@ -47,7 +47,7 @@ public class StartServer {
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 int id = Integer.parseInt(doLogin.introspect(req.cookie("auth")).get("id"));
-                if(isAdmin(req.cookie("auth"))){
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
                     res.status(200);
                     return HomeGUI.getHome(true, true, n, id);
                 }
@@ -67,7 +67,7 @@ public class StartServer {
             String n = "Non connecté";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
-                if(isAdmin(req.cookie("auth"))){
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
                     res.status(200);
                     return AboutGUI.getAbout(true, true, n);
                 }
@@ -97,7 +97,7 @@ public class StartServer {
         //Requête page admin
         get("/admin", (req, res) -> {
             if(doLogin.isLogged(req.cookie("auth"))){
-                if(isAdmin(req.cookie("auth"))){
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
                     String n = doLogin.getLoggedName(req.cookie("auth"));
                     res.status(200);
                     return AdminGUI.getAllUsers(n);
@@ -122,13 +122,13 @@ public class StartServer {
         post("/register/try", (req, res) ->{           
             UserEntity user = new UserEntity();
             String n = req.queryParams("name");
-            if(existN(n)){
+            if(CleanSecurity.existN(n)){
                 res.status(400);
                 return "Le nom est déjà utilisé";
             }
             else{
                 String e = req.queryParams("email");
-                if(existM(e)){
+                if(CleanSecurity.existM(e)){
                     res.status(400);
                     return "Le mail est déjà utilisé";
                 }
@@ -160,7 +160,7 @@ public class StartServer {
         // Requête création file
         post("/addfile", "multipart/form-data", (req, res) -> {
             if(doLogin.isLogged(req.cookie("auth"))){
-                if(isBanned(req.cookie("auth"))){
+                if(CleanSecurity.isBanned(req.cookie("auth"))){
                     res.redirect("/troll", 301);
                     return "Tu ne peux pas upload de fichier si t'es ban";
                 }
@@ -186,13 +186,13 @@ public class StartServer {
         // Requête supression file
         post("/delfile/:id", (req, res) -> {
             if(doLogin.isLogged(req.cookie("auth"))){
-                if(isBanned(req.cookie("auth"))){
+                if(CleanSecurity.isBanned(req.cookie("auth"))){
                     res.redirect("/troll", 301);
                     return "Tu ne peux pas supprimer de fichier si t'es ban";
                 }
                 else{
                     int fileid = Integer.parseInt(req.params(":id"));
-                    if(isOwner(req.cookie("auth"),fileid) || isAdmin(req.cookie("auth"))){
+                    if(CleanSecurity.isOwner(req.cookie("auth"),fileid) || CleanSecurity.isAdmin(req.cookie("auth"))){
                         FileCore.delete(fileid);
                         res.status(201);
                         res.redirect("/", 301);
@@ -213,13 +213,13 @@ public class StartServer {
         // Requête download file
         get("/dwlfile/:id", (req, res) -> {
             if(doLogin.isLogged(req.cookie("auth"))){
-                if(isBanned(req.cookie("auth"))){
+                if(CleanSecurity.isBanned(req.cookie("auth"))){
                     res.redirect("/troll", 301);
                     return "Tu ne peux pas télécharger de fichier si t'es ban";
                 }
                 else{
                     int fileid = Integer.parseInt(req.params(":id"));
-                    if(isOwner(req.cookie("auth"),fileid) || isAdmin(req.cookie("auth"))){
+                    if(CleanSecurity.isOwner(req.cookie("auth"),fileid) || CleanSecurity.isAdmin(req.cookie("auth"))){
                         FileEntity f = FileCore.download(fileid);
                         res.raw().setContentType("application/octet-stream");
                         res.raw().setHeader("Content-Disposition","attachment; filename="+f.getFileName());
@@ -254,7 +254,7 @@ public class StartServer {
 
         // Requête ban user
         post("/ban/:id", (req, res) -> {
-            if(isAdmin(req.cookie("auth"))){
+            if(CleanSecurity.isAdmin(req.cookie("auth"))){
                 res.type("application/json");
                 UserCore.ban(req.params(":id"));
                 res.redirect("/admin", 301);
@@ -268,7 +268,7 @@ public class StartServer {
 
         // Requête unban user 
         post("/unban/:id", (req, res) -> {
-            if(isAdmin(req.cookie("auth"))){
+            if(CleanSecurity.isAdmin(req.cookie("auth"))){
                 res.type("application/json");
                 UserCore.unban(req.params(":id"));
                 res.redirect("/admin", 301);
@@ -368,7 +368,7 @@ public class StartServer {
         /*
         post("/api/add", (req, res) -> {
             if(doLogin.isLogged(req.headers("Authorization"))){
-                if(isBanned(req.headers("Authorization"))){
+                if(CleanSecurity.isBanned(req.headers("Authorization"))){
                     res.redirect("/troll", 301);
                     return "Tu ne peux pas ecrire d'article en étant ban";
                 }
@@ -399,7 +399,7 @@ public class StartServer {
         /*
         put("api/edit/:id/content", (req, res) -> {
             if(ArticleCore.existArt(req.params(":id"))){
-                if(isAdmin(req.cookie("auth"))){
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
                     res.type("application/json");
                     ArticleCore.edit(req.params(":id"), req.queryParams("content"));
                     res.redirect("/", 301);
@@ -420,7 +420,7 @@ public class StartServer {
         /*
         put("/api/edit/:id", (req, res) -> {
             if(ArticleCore.existArt(req.params(":id"))){
-                if(isAdmin(req.headers("Authorization"))){
+                if(CleanSecurity.isAdmin(req.headers("Authorization"))){
                     if(req.headers("Content-Type").equals("application/json")) {
                         ArticleEntity art = new ArticleEntity();
                         art = new Gson().fromJson(req.body(), ArticleEntity.class);
@@ -451,7 +451,7 @@ public class StartServer {
         /*
         delete("/api/del/:id", (req, res) -> {
             if(ArticleCore.existArt(req.params(":id"))){
-                if(isAdmin(req.headers("Authorization"))){
+                if(CleanSecurity.isAdmin(req.headers("Authorization"))){
                     res.type("application/json");
                     ArticleCore.delete(req.params(":id"));
                     return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "article deleted"));
@@ -472,7 +472,7 @@ public class StartServer {
         /*
         delete("/api/del/com/:artid/:id", (req, res) -> {
             if(CommentCore.existCom(req.params(":id"))){
-                if(isAdmin(req.cookie("auth"))){
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
                     res.type("application/json");
                     CommentCore.delete(req.params(":id"));
                     String red = "/article/" + req.params(":artid");
@@ -494,7 +494,7 @@ public class StartServer {
         // Requête ban user
         /*
         put("/api/ban/:id", (req, res) -> {
-            if(isAdmin(req.cookie("auth"))){
+            if(CleanSecurity.isAdmin(req.cookie("auth"))){
                 res.type("application/json");
                 UserCore.ban(req.params(":id"));
                 res.redirect("/admin", 301);
@@ -510,7 +510,7 @@ public class StartServer {
         // Requête unban user
         /*
         put("/api/unban/:id", (req, res) -> {
-            if(isAdmin(req.cookie("auth"))){
+            if(CleanSecurity.isAdmin(req.cookie("auth"))){
                 res.type("application/json");
                 UserCore.unban(req.params(":id"));
                 res.redirect("/admin", 301);
@@ -583,7 +583,6 @@ public class StartServer {
         }
     }
 
-    
     private static String convertToJsonReg(String name, String email, String password){
         String res = "{'name' : '" + name + "', 'email' : '" + email + "', 'password' : '" + password + "'}";
         return res;
@@ -592,42 +591,5 @@ public class StartServer {
     private static String convertToJsonLog(String name, String password){
         String res = "{'name' : '" + name + "', 'password' : '" + password + "'}";
         return res;
-    }
-
-    // Fonctions suivantes a faire dans un fichier dedié à la sécurité ou un Core
-    private static Boolean isAdmin(String token){
-        Map<String,String> user = doLogin.introspect(token);
-        String id = user.get("id");
-        int identity = Integer.parseInt(id);
-        return new UserDAO().isAdmin(identity);
-    }
-
-    private static Boolean isBanned(String token){
-        int identity;
-        // Savoir si un utilisateur est ban depuis ses cookies
-        if(doLogin.isLogged(token)){
-            Map<String,String> user = doLogin.introspect(token);
-            String id = user.get("id");
-            identity = Integer.parseInt(id);
-        }// Savoir si un utilisateur est ban depuis la page admin par son id
-        else{
-            identity = Integer.parseInt(token);
-        }
-        return new UserDAO().isBanned(identity);
-    }
-
-    private static Boolean existN(String name){
-        return new UserDAO().existN(name);
-    }
-
-    private static Boolean existM(String mail){
-        return new UserDAO().existM(mail);
-    }
-
-    private static Boolean isOwner(String token, int fileId){
-        Map<String,String> user = doLogin.introspect(token);
-        int authorid = Integer.parseInt(user.get("id"));
-        return new FileDAO().isOwner(authorid, fileId);
-    }
-    
+    }    
 }
