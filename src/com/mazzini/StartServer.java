@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import com.mazzini.core.*;
-import com.mazzini.dao.*;
+import com.mazzini.dao._Initializer;
 import com.mazzini.entity.*;
 import com.mazzini.gui.*;
 import com.mazzini.security.*;
@@ -38,7 +38,7 @@ public class StartServer {
 
         /********************************/
         /*          Requêtes UI         */
-        /*        opti sur firefox      */
+        /*  firefox && chrome approved  */
         /********************************/
 
         //Requête acceuil
@@ -295,46 +295,8 @@ public class StartServer {
 
         /********************************/
         /*          Requêtes API        */
-        /*        opti sur firefox      */
+        /*        Postman approved      */
         /********************************/
-
-        // tous les articles
-        /*
-        get("/api/articles", (req, res) -> {
-            Boolean useXML = useXML(req);
-            if (useXML == null) {
-                res.status(406);
-                return "";
-            }
-
-            ArrayList<ArticleEntity> entities = ArticleCore.getAllArticles();
-            if (entities == null || entities.size() == 0) {
-                res.status(204);
-                return "";
-            }
-
-            res.header("Content-Type", useXML ? "application/xml" : "application/json");
-            return parseContent(useXML, entities);
-        });
-        */
-
-        // articles par id
-        /*
-        get("/api/articles/:id", (req, res) -> {
-            Boolean useXML = useXML(req);
-            if (useXML == null) {
-                res.status(406);
-                return "";
-            }        
-            ArticleEntity entity = ArticleCore.getArticleById(req.params(":id"));
-            if (entity == null) {
-                res.status(204);
-                return "";
-            }        
-            res.header("Content-Type", useXML ? "application/xml" : "application/json");
-            return parseContent(useXML, entity);
-        });
-        */
 
         // Sans negociation de contenu, le body doit être en json
 
@@ -360,133 +322,6 @@ public class StartServer {
                 res.header("Authorization",r);
                 res.status(200);
                 return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, r));
-            }
-        });
-        */
-
-        // créer un article par api
-        /*
-        post("/api/add", (req, res) -> {
-            if(doLogin.isLogged(req.headers("Authorization"))){
-                if(CleanSecurity.isBanned(req.headers("Authorization"))){
-                    res.redirect("/troll", 301);
-                    return "Tu ne peux pas ecrire d'article en étant ban";
-                }
-                else{
-                    ArticleEntity art = new ArticleEntity();
-                    if(req.headers("Content-Type").equals("application/json")) {
-                        art = new Gson().fromJson(req.body(), ArticleEntity.class);
-                    }
-                    else{
-                        res.status(406);
-                        return "";
-                    }
-                    Map<String,String> user = doLogin.introspect(req.headers("Authorization"));
-                    String auteur = user.get("sub");
-                    art.setAuthor(auteur);                    
-                    ArticleCore.create(art);
-                    res.status(201);
-                    return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "article created"));
-                }
-            }
-            else{
-                res.status(401);
-                return "Tu peux pas ecrire un article si t'es pas connecté";
-            }
-        });
-        */
-        // modification d'un article (ici on peut modif uniquement le contenu)
-        /*
-        put("api/edit/:id/content", (req, res) -> {
-            if(ArticleCore.existArt(req.params(":id"))){
-                if(CleanSecurity.isAdmin(req.cookie("auth"))){
-                    res.type("application/json");
-                    ArticleCore.edit(req.params(":id"), req.queryParams("content"));
-                    res.redirect("/", 301);
-                    return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "article edited"));
-                }
-                else{
-                    res.status(401);
-                    return "Tu ne peux pas editer un article si t'es pas admin";
-                }
-            }
-            else{
-                res.status(404);
-                return "Tu ne peux pas editer un article qui existe pas";
-            }
-        });
-        */
-        // modification d'un article (ici on modif le titre et le contenu)
-        /*
-        put("/api/edit/:id", (req, res) -> {
-            if(ArticleCore.existArt(req.params(":id"))){
-                if(CleanSecurity.isAdmin(req.headers("Authorization"))){
-                    if(req.headers("Content-Type").equals("application/json")) {
-                        ArticleEntity art = new ArticleEntity();
-                        art = new Gson().fromJson(req.body(), ArticleEntity.class);
-                        String name = art.getName();
-                        String content = art.getContent();
-                        ArticleCore.edit(req.params(":id"), name, content);
-                    }
-                    else{
-                        res.status(406);
-                        return "";
-                    }
-                    res.type("application/json");
-                    return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "article edited"));
-                }
-                else{
-                    res.status(401);
-                    return "Tu ne peux pas editer un article si t'es pas admin";
-                }
-            }
-            else{
-                res.status(404);
-                return "Tu ne peux pas editer un article qui existe pas";
-            }
-        });
-        */
-
-        // suppression d'un article par api
-        /*
-        delete("/api/del/:id", (req, res) -> {
-            if(ArticleCore.existArt(req.params(":id"))){
-                if(CleanSecurity.isAdmin(req.headers("Authorization"))){
-                    res.type("application/json");
-                    ArticleCore.delete(req.params(":id"));
-                    return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "article deleted"));
-                }
-                else{
-                    res.status(401);
-                    return "Tu ne peux pas supprimer un article si t'es pas admin";
-                }
-            }
-            else{
-                res.status(404);
-                return "Tu ne peux pas supprimer un article qui existe pas";
-            }
-        });
-        */
-
-        // suppression d'un commentaire d'article par api
-        /*
-        delete("/api/del/com/:artid/:id", (req, res) -> {
-            if(CommentCore.existCom(req.params(":id"))){
-                if(CleanSecurity.isAdmin(req.cookie("auth"))){
-                    res.type("application/json");
-                    CommentCore.delete(req.params(":id"));
-                    String red = "/article/" + req.params(":artid");
-                    res.redirect(red, 301);
-                    return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "article deleted"));
-                }
-                else{
-                    res.status(401);
-                    return "Tu ne peux pas supprimer un article si t'es pas admin";
-                }
-            }
-            else{
-                res.status(404);
-                return "Tu ne peux pas supprimer un commentaire qui existe pas";
             }
         });
         */
