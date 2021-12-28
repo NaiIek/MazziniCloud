@@ -15,10 +15,12 @@ public class _Initializer {
             /*
             statement = connection.prepareStatement("DROP TABLE IF EXISTS users; ");
             statement.executeUpdate();
+            System.out.println("Oublie pas de recommenter le drop table");
             */
             /*
             statement = connection.prepareStatement("DROP TABLE IF EXISTS attachment; ");
             statement.executeUpdate();
+            System.out.println("Oublie pas de recommenter le drop table");
             */
 
             //Init users table
@@ -26,7 +28,7 @@ public class _Initializer {
             statement.executeUpdate();
             
             //Init attachment files Table (ajouter potentiel feature de path)
-            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS attachment (id int primary key auto_increment, authorid int, filename varchar(50), filedata BLOB);");
+            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS attachment (id int primary key auto_increment, authorid int, filename varchar(260), filedata BLOB, filepath varchar(260), storageSize int);");
             statement.executeUpdate();
 
             // initialisation d'un utilisateur admin (décommenter pour créer un utilisateur en lançant le serv puis recommenter)

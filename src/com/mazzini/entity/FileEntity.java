@@ -7,6 +7,8 @@ public class FileEntity {
     private int authorid;
     private String filename;
     private InputStream filedata;
+    private String filepath = "/";
+    private int storageSize;
 
     public FileEntity(){
         // Ignored
@@ -42,5 +44,21 @@ public class FileEntity {
 
     public void setFileData(InputStream f){
         this.filedata = f;
+    }
+
+    public int getStorageSize(){
+        return storageSize;
+    }
+
+    public void setStorageSize(int storageSize){
+        this.storageSize = storageSize;
+    }
+
+    public String getFilePath(){
+        return filepath;
+    }
+
+    public void setFilePath(String filepath){
+        this.filepath = filepath;
     }
 }

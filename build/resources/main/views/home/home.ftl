@@ -29,7 +29,7 @@
                         </form>
                     </div>
                 </#list>
-                <p>feature à implémenter (telecharger/renommer fichier)</p>
+                <p>feature à implémenter (renommer fichier)</p>
             </div>
             <#else>
                 <div id="PageContent">

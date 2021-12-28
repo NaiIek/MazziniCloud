@@ -2,7 +2,7 @@
 
 ## **Projet**
 
-Le projet est un simple serveur de stockage de fichiers. Je me base sur un modèle MVC (Model View Controller)
+Le projet est un simple serveur de stockage de fichiers. Je me base sur un modèle MVC (Model View Controller).
 
 ---
 ## **Technos**
@@ -61,6 +61,8 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 - [ ] Modification nom fichiers (max 260 caractères)
 
 - [ ] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
+
+- [ ] Ajout d'un int size dans la BDD fichiers pour stocker le nombre d'octets approximatif du tuple (fichier+id+authorid+name+path) 
 
 - [ ] Gestion de l'espace de stockage global en fonction de l'infrastructure physique (bon courage)
 

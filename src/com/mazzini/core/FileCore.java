@@ -14,7 +14,6 @@ public class FileCore {
 
     public static FileEntity create(int authorid, String filename, InputStream filedata){
         FileEntity f = new FileEntity();
-        // Ajouter ce qu'il faut pour inputStream qui va poser pb
         f.setAuthorId(authorid);
         f.setFileName(filename);
         f.setFileData(filedata);

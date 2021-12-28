@@ -20,7 +20,6 @@ public class FileDAO extends _Generic<FileEntity> {
                     entity.setId(resultSet.getInt("id"));
                     entity.setAuthorId(resultSet.getInt("authorid"));
                     entity.setFileName(resultSet.getString("filename"));
-                    //entity.setFileData(resultSet.getBlob("filedata").getBinaryStream());
                     entities.add(entity);
                 }
             } catch (SQLException e) {
@@ -79,10 +78,12 @@ public class FileDAO extends _Generic<FileEntity> {
     @Override
     public FileEntity create(FileEntity obj) {
         try {
-            PreparedStatement preparedStatement = this.connect.prepareStatement("INSERT INTO attachment(authorid, filename, filedata) " + "VALUES (?, ?, ?);");
+            PreparedStatement preparedStatement = this.connect.prepareStatement("INSERT INTO attachment(authorid, filename, filedata, filepath, storageSize) " + "VALUES (?, ?, ?, ?, ?);");
             preparedStatement.setInt(1, obj.getAuthorId());
             preparedStatement.setString(2, obj.getFileName());
             preparedStatement.setBlob(3, obj.getFileData());
+            preparedStatement.setString(4, obj.getFilePath());
+            preparedStatement.setInt(5, obj.getStorageSize());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
