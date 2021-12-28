@@ -83,7 +83,7 @@ public class FileDAO extends _Generic<FileEntity> {
             preparedStatement.setString(2, obj.getFileName());
             preparedStatement.setBlob(3, obj.getFileData());
             preparedStatement.setString(4, obj.getFilePath());
-            preparedStatement.setInt(5, obj.getStorageSize());
+            preparedStatement.setLong(5, obj.getStorageSize());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

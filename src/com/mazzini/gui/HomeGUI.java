@@ -25,9 +25,6 @@ public class HomeGUI {
         input.put("username", name);
 
         ArrayList<FileEntity> entities = FileCore.getAllFiles(id);
-        /*for(int i = 0; i<entities.size(); i++){
-            System.out.println("Fichier: " + entities.get(i).getFileName() + " de: " + entities.get(i).getAuthorId());
-        }*/
         input.put("files", entities);
 
         Writer output = new StringWriter();

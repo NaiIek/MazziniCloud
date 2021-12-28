@@ -170,7 +170,8 @@ public class StartServer {
                     req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
                     String n = req.raw().getPart("uploaded_file").getSubmittedFileName();
                     InputStream input = req.raw().getPart("uploaded_file").getInputStream();
-                    FileCore.create(authorid, n, input);
+                    long inputSize = req.raw().getPart("uploaded_file").getSize();
+                    FileCore.create(authorid, n, input, inputSize);
                     res.status(201);
                     res.redirect("/", 301);
                     return "Tentative upload effectue";

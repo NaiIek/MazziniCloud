@@ -8,7 +8,7 @@ public class FileEntity {
     private String filename;
     private InputStream filedata;
     private String filepath = "/";
-    private int storageSize;
+    private long storageSize;
 
     public FileEntity(){
         // Ignored
@@ -46,11 +46,11 @@ public class FileEntity {
         this.filedata = f;
     }
 
-    public int getStorageSize(){
+    public long getStorageSize(){
         return storageSize;
     }
 
-    public void setStorageSize(int storageSize){
+    public void setStorageSize(long storageSize){
         this.storageSize = storageSize;
     }
 

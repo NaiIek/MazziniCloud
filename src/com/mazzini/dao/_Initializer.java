@@ -28,7 +28,7 @@ public class _Initializer {
             statement.executeUpdate();
             
             //Init attachment files Table (ajouter potentiel feature de path)
-            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS attachment (id int primary key auto_increment, authorid int, filename varchar(260), filedata BLOB, filepath varchar(260), storageSize int);");
+            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS attachment (id int primary key auto_increment, authorid int, filename varchar(260), filedata BLOB, filepath varchar(260), storageSize long);");
             statement.executeUpdate();
 
             // initialisation d'un utilisateur admin (décommenter pour créer un utilisateur en lançant le serv puis recommenter)

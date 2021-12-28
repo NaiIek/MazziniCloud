@@ -12,11 +12,12 @@ public class FileCore {
         return new FileDAO().getAllFiles(authorid);
     }
 
-    public static FileEntity create(int authorid, String filename, InputStream filedata){
+    public static FileEntity create(int authorid, String filename, InputStream filedata, long inputSize){
         FileEntity f = new FileEntity();
         f.setAuthorId(authorid);
         f.setFileName(filename);
         f.setFileData(filedata);
+        f.setStorageSize(inputSize+2048); // 2048 bytes added in count for security and other stored values in db
         return new FileDAO().create(f);
     }
 
