@@ -20,6 +20,7 @@ public class FileDAO extends _Generic<FileEntity> {
                     entity.setId(resultSet.getInt("id"));
                     entity.setAuthorId(resultSet.getInt("authorid"));
                     entity.setFileName(resultSet.getString("filename"));
+                    entity.setFilePath(resultSet.getString("filepath"));
                     entities.add(entity);
                 }
             } catch (SQLException e) {

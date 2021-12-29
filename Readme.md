@@ -62,23 +62,25 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [ ] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
 
-- [ ] Ajout d'un int size dans la BDD fichiers pour stocker le nombre d'octets approximatif du tuple (fichier+id+authorid+name+path) 
+- [x] Ajout d'un int size dans la BDD fichiers pour stocker le nombre d'octets approximatif du tuple (fichier+id+authorid+name+path) 
+
+- [ ] Ajout d'une option pour vérifier si un utilisateur upload deux fois le même fichier.
 
 - [ ] Gestion de l'espace de stockage global en fonction de l'infrastructure physique (bon courage)
 
 - [ ] Encryptage de toutes les datas fichiers/noms fichier pour augmenter la sécurité.
 
-- [ ] Refactoring-Optimisations (placer les méthodes aux bons endroits, réduire la redondance notamment)
+- [ ] Refactoring-Optimisations (placer les méthodes aux bons endroits, réduire la redondance notamment) - techniquement infini
 
 - [ ] Pouvoir accéder aux fichiers utilisateurs depuis la page admin (uniquement à des fins de modération/gestion d'espace - ne pas mettre d'accès au contenu)
 
 - [ ] Créer une API Rest pour upload, download des fichiers, créer des path sans passer par un navigateur
 
-- [ ] Proposer une prévisualisation des images uploadées
+- [ ] UI : Proposer une prévisualisation des images uploadées
 
-- [ ] Proposer une prévisualisation des audios uploadés
+- [ ] UI : Proposer une prévisualisation des audios uploadés
 
-- [ ] Proposer une lecture en streaming des vidéos uploadées
+- [ ] UI : Proposer une lecture en streaming des vidéos uploadées
 
 - [ ] Imaginer d'autres services à proposer
 

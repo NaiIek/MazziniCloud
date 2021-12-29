@@ -417,7 +417,7 @@ public class StartServer {
             return null;
         }
     }
-
+    
     private static String convertToJsonReg(String name, String email, String password){
         String res = "{'name' : '" + name + "', 'email' : '" + email + "', 'password' : '" + password + "'}";
         return res;
@@ -426,5 +426,5 @@ public class StartServer {
     private static String convertToJsonLog(String name, String password){
         String res = "{'name' : '" + name + "', 'password' : '" + password + "'}";
         return res;
-    }    
+    }  
 }

@@ -1,0 +1,38 @@
+com/mazzini/gui/AdminGUI.java
+ com.mazzini.gui.AdminGUI
+com/mazzini/security/CleanSecurity.java
+ com.mazzini.security.CleanSecurity
+com/mazzini/dao/_Generic.java
+ com.mazzini.dao._Generic
+com/mazzini/entity/FileEntity.java
+ com.mazzini.entity.FileEntity
+com/mazzini/dao/_Connector.java
+ com.mazzini.dao._Connector
+com/mazzini/dao/_Initializer.java
+ com.mazzini.dao._Initializer
+com/mazzini/entity/UserEntity.java
+ com.mazzini.entity.UserEntity
+com/mazzini/core/FileCore.java
+ com.mazzini.core.FileCore
+com/mazzini/gui/_FreeMarkerInitializer.java
+ com.mazzini.gui._FreeMarkerInitializer
+com/mazzini/security/doLogin.java
+ com.mazzini.security.doLogin
+com/mazzini/dao/UserDAO.java
+ com.mazzini.dao.UserDAO
+com/mazzini/dao/FileDAO.java
+ com.mazzini.dao.FileDAO
+com/mazzini/gui/HomeGUI.java
+ com.mazzini.gui.HomeGUI
+com/mazzini/core/UserCore.java
+ com.mazzini.core.UserCore
+com/mazzini/gui/AboutGUI.java
+ com.mazzini.gui.AboutGUI
+com/mazzini/security/DirtySecurity.java
+ com.mazzini.security.DirtySecurity
+com/mazzini/gui/LoginGUI.java
+ com.mazzini.gui.LoginGUI
+com/mazzini/gui/RegisterGUI.java
+ com.mazzini.gui.RegisterGUI
+com/mazzini/StartServer.java
+ com.mazzini.StartServer
