@@ -76,6 +76,17 @@ public class FileDAO extends _Generic<FileEntity> {
         return res;
     }
 
+    public void rename(FileEntity file){
+        try {
+            PreparedStatement preparedStatement = this.connect.prepareStatement("UPDATE attachment SET filename = ? WHERE id = ?;");
+            preparedStatement.setString(1, file.getFileName());
+            preparedStatement.setInt(2, file.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public FileEntity create(FileEntity obj) {
         try {

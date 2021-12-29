@@ -19,13 +19,18 @@
                 <#list files as file>
                     <div id="FileContent">
                         <p>Fichier: ${file.getFileName()}</p>
-                        <#assign del_link = "/delfile/${file.id}">
-                        <form action="${del_link}" method="POST">
-                            <input type="submit" value="Supprimer">
+                        <#assign rnm_link = "/rnmfile/${file.id}">
+                        <form action="${rnm_link}" method="POST">
+                            <div class="forminput"><input type="text" placeholder="Nouveau nom" name="rename" required></div>
+                            <div class="forminput"><input type="submit" value="Renommer"></div>
                         </form>
                         <#assign dwl_link = "/dwlfile/${file.id}">
                         <form action="${dwl_link}" method="GET">
-                            <input type="submit" value="Télécharger">
+                            <div class="forminput"><input type="submit" value="Télécharger"></div>
+                        </form>
+                        <#assign del_link = "/delfile/${file.id}">
+                        <form action="${del_link}" method="POST">
+                            <div class="forminput"><input type="submit" value="Supprimer"></div>
                         </form>
                     </div>
                 </#list>

@@ -5,6 +5,11 @@
 Le projet est un simple serveur de stockage de fichiers. Je me base sur un modèle MVC (Model View Controller).
 
 ---
+## **Démarrage**
+
+Dans un bash, executer `./gradlew run`
+
+---
 ## **Technos**
 
 ### Front
@@ -60,13 +65,21 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [x] Modification nom fichiers (max 260 caractères)
 
-- [ ] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
+- [x] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
 
-- [x] Ajout d'un int size dans la BDD fichiers pour stocker le nombre d'octets approximatif du tuple (fichier+id+authorid+name+path) 
+- [ ] Fonctionnalité CRUD sur un "dossier" (path en BDD)
+
+- [x] Ajout d'un int size dans la BDD fichiers pour stocker le nombre d'octets approximatif du tuple (fichier+id+authorid+name+path)
+
+- [x] Renommer un fichier stocké
 
 - [ ] Ajout d'une option pour vérifier si un utilisateur upload deux fois le même fichier.
 
-- [ ] Gestion de l'espace de stockage global en fonction de l'infrastructure physique (bon courage)
+- [ ] Vérifier automatiquement l'extansion d'un fichier que l'on renomme
+
+- [ ] Gestion de l'espace de stockage global et par utilisateur en fonction de l'infrastructure physique (bon courage)
+
+- [ ] Proposer un onglet profil customisable.
 
 - [ ] Encryptage de toutes les datas fichiers/noms fichier pour augmenter la sécurité.
 

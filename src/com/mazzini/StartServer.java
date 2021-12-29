@@ -196,7 +196,7 @@ public class StartServer {
                         FileCore.delete(fileid);
                         res.status(201);
                         res.redirect("/", 301);
-                        return "Tentative delete effectue";
+                        return "Tentative suppression effectue";
                     }
                     else{
                         res.status(401);
@@ -207,6 +207,34 @@ public class StartServer {
             else{
                 res.status(401);
                 return "Tu ne peux pas supprimer de fichier si t'es pas connecté";
+            }
+        });
+
+        // Requête rename file
+        post("/rnmfile/:id", (req, res) -> {
+            if(doLogin.isLogged(req.cookie("auth"))){
+                if(CleanSecurity.isBanned(req.cookie("auth"))){
+                    res.redirect("/troll", 301);
+                    return "Tu ne peux pas renommer de fichier si t'es ban";
+                }
+                else{
+                    int fileid = Integer.parseInt(req.params(":id"));
+                    String newname = req.queryParams("rename");
+                    if(CleanSecurity.isOwner(req.cookie("auth"),fileid) || CleanSecurity.isAdmin(req.cookie("auth"))){
+                        FileCore.rename(fileid,newname);
+                        res.status(201);
+                        res.redirect("/", 301);
+                        return "Tentative renommage effectue";
+                    }
+                    else{
+                        res.status(401);
+                        return "Tu ne peux pas renommer un fichier qui ne t'appartiens pas";
+                    }                    
+                }
+            }
+            else{
+                res.status(401);
+                return "Tu ne peux pas renommer de fichier si t'es pas connecté";
             }
         });
 

@@ -25,6 +25,13 @@ public class FileCore {
         return new FileDAO().getFileDataById(fileId);
     }
 
+    public static void rename(int fileId, String newname){
+        FileEntity f = new FileEntity();
+        f.setId(fileId);
+        f.setFileName(newname);
+        new FileDAO().rename(f);
+    }
+
     public static void delete(int fileId){
         FileEntity f = new FileEntity();
         f.setId(fileId);
