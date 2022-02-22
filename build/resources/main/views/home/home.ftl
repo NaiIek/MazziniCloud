@@ -15,7 +15,7 @@
                 <p>Les fichiers que vous stockez sur le site ne seront visible que par vous et les administrateurs, évitez de stocker des fichiers sensibles.</p>
             </div>
             <div id="PageContent">
-                <h2>Mes Fichiers</h2>
+                <h2>Mon Stockage</h2>
                 <#list files as file>
                     <div id="FileContent">
                         <p>Fichier: ${file.getFileName()}</p>

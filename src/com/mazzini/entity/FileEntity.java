@@ -14,6 +14,13 @@ public class FileEntity {
         // Ignored
     }
 
+    public FileEntity(int authorid, String filename, InputStream filedata, long inputSize){
+        this.authorid = authorid;
+        this.filename = filename;
+        this.filedata = filedata;
+        this.storageSize = inputSize;
+    }
+
     public int getId(){
         return id;
     }
@@ -34,8 +41,8 @@ public class FileEntity {
         return filename;
     }
 
-    public void setFileName(String name){
-        this.filename = name;
+    public void setFileName(String newname){
+        this.filename = newname;       
     }
 
     public InputStream getFileData(){

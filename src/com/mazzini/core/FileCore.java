@@ -13,11 +13,7 @@ public class FileCore {
     }
 
     public static FileEntity create(int authorid, String filename, InputStream filedata, long inputSize){
-        FileEntity f = new FileEntity();
-        f.setAuthorId(authorid);
-        f.setFileName(filename);
-        f.setFileData(filedata);
-        f.setStorageSize(inputSize+2048); // 2048 bytes added in count for security and other stored values in db
+        FileEntity f = new FileEntity(authorid,filename,filedata,inputSize+2048); // 2048 bytes added in count for security and other stored values in db
         return new FileDAO().create(f);
     }
 
@@ -28,7 +24,17 @@ public class FileCore {
     public static void rename(int fileId, String newname){
         FileEntity f = new FileEntity();
         f.setId(fileId);
-        f.setFileName(newname);
+        String oldName = new FileDAO().getFileById(fileId).getFileName();
+        String[] nameSplit = oldName.split("\\.");
+        String oldExtension = "."+nameSplit[nameSplit.length-1];
+        String[] newNameSplit = newname.split("\\.");
+        String newExtension = "."+newNameSplit[newNameSplit.length-1];
+        if(newExtension.equals(oldExtension)){
+            f.setFileName(newname);
+        }
+        else{
+            f.setFileName(newname+oldExtension);
+        } 
         new FileDAO().rename(f);
     }
 

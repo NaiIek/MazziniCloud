@@ -67,6 +67,8 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [x] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
 
+- [ ] Faire des logs serveurs (connexion/deconnection/inscription/upload/filesize/download)
+
 - [ ] Fonctionnalité CRUD sur un "dossier" (path en BDD)
 
 - [x] Ajout d'un int size dans la BDD fichiers pour stocker le nombre d'octets approximatif du tuple (fichier+id+authorid+name+path)
@@ -75,7 +77,7 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [ ] Ajout d'une option pour vérifier si un utilisateur upload deux fois le même fichier.
 
-- [ ] Vérifier automatiquement l'extansion d'un fichier que l'on renomme
+- [x] Vérifier automatiquement l'extansion d'un fichier que l'on renomme
 
 - [ ] Gestion de l'espace de stockage global et par utilisateur en fonction de l'infrastructure physique (bon courage)
 

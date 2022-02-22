@@ -454,5 +454,5 @@ public class StartServer {
     private static String convertToJsonLog(String name, String password){
         String res = "{'name' : '" + name + "', 'password' : '" + password + "'}";
         return res;
-    }  
+    }
 }
