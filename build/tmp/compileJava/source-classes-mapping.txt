@@ -8,14 +8,14 @@ com/mazzini/entity/FileEntity.java
  com.mazzini.entity.FileEntity
 com/mazzini/dao/_Connector.java
  com.mazzini.dao._Connector
-com/mazzini/gui/LoginGUI.java
- com.mazzini.gui.LoginGUI
+com/mazzini/gui/RegisterGUI.java
+ com.mazzini.gui.RegisterGUI
 com/mazzini/entity/UserEntity.java
  com.mazzini.entity.UserEntity
 com/mazzini/core/FileCore.java
  com.mazzini.core.FileCore
-com/mazzini/gui/RegisterGUI.java
- com.mazzini.gui.RegisterGUI
+com/mazzini/dao/_Initializer.java
+ com.mazzini.dao._Initializer
 com/mazzini/security/doLogin.java
  com.mazzini.security.doLogin
 com/mazzini/dao/UserDAO.java
@@ -30,8 +30,10 @@ com/mazzini/gui/AboutGUI.java
  com.mazzini.gui.AboutGUI
 com/mazzini/security/DirtySecurity.java
  com.mazzini.security.DirtySecurity
-com/mazzini/dao/_Initializer.java
- com.mazzini.dao._Initializer
+com/mazzini/gui/LoginGUI.java
+ com.mazzini.gui.LoginGUI
+com/mazzini/security/EventLogger.java
+ com.mazzini.security.EventLogger
 com/mazzini/gui/_FreeMarkerInitializer.java
  com.mazzini.gui._FreeMarkerInitializer
 com/mazzini/StartServer.java
