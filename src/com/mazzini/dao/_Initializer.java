@@ -42,7 +42,7 @@ public class _Initializer {
             statement.executeUpdate();
             */
 
-            System.out.println("Initialisation Database termin\u00e9e");
+            System.out.println("Initialisation Database termin\u00E9e");
         } catch (Exception e){
             System.out.println(e.toString());
             throw new RuntimeException("could not create database !");

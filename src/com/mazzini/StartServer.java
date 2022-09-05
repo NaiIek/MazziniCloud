@@ -31,6 +31,7 @@ import static spark.Spark.*;
 public class StartServer {
 
     public static void main(String[] args) {
+        EventLogger.logEvent("Server is starting...", 1);
         //Configure Spark
         String keyStoreLocation = "deploy/letsencrypt.jks";
         String keyStorePassword = "mysuperpassword";
@@ -47,7 +48,7 @@ public class StartServer {
 
         //Requête acceuil
         get("/", (req, res) -> {
-            String n = "Non connect\u00e9";
+            String n = "Non connect\u00E9";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 int id = Integer.parseInt(doLogin.introspect(req.cookie("auth")).get("id"));
@@ -68,7 +69,7 @@ public class StartServer {
 
         //Requête page a propos        
         get("/sujet", (req, res) -> {
-            String n = "Non connect\u00e9";
+            String n = "Non connect\u00E9";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 if(CleanSecurity.isAdmin(req.cookie("auth"))){
@@ -128,21 +129,22 @@ public class StartServer {
             String n = req.queryParams("name");
             if(CleanSecurity.existN(n)){
                 res.status(400);
-                return "Le nom est d\u00e9jà utilis\u00e9";
+                return "Le nom est d\u00E9jà utilis\u00E9";
             }
             else{
                 String e = req.queryParams("email");
                 if(CleanSecurity.existM(e)){
                     res.status(400);
-                    return "Le mail est d\u00e9jà utilis\u00e9";
+                    return "Le mail est d\u00E9jà utilis\u00E9";
                 }
                 else{
                     String p = DirtySecurity.encrypt(req.queryParams("password")); 
                     String r = convertToJsonReg(n,e,p);
                     user = new Gson().fromJson(r, UserEntity.class);            
                     UserCore.create(user);
-                    res.redirect("/login", 301);          
-                    return "Creation du compte utilisateur r\u00e9alis\u00e9 avec succès";
+                    res.redirect("/login", 301);
+                    EventLogger.logEvent(EventLogger.getRegisterEvent(n),1);         
+                    return "Creation du compte utilisateur r\u00E9alis\u00E9 avec succès";
                 }
             }
         });  
@@ -158,7 +160,8 @@ public class StartServer {
             r = doLogin.tryLogin(user);
             res.cookie("/","auth",r,3600,true,true);
             res.redirect("/", 301);
-            return "Essai de Login effectu\u00e9";
+            EventLogger.logEvent(EventLogger.getConnectionEvent(n),1);
+            return "Essai de Login effectu\u00E9";
         });     
 
         // Requête création file
@@ -178,12 +181,13 @@ public class StartServer {
                     FileCore.create(authorid, n, input, inputSize);
                     res.status(201);
                     res.redirect("/", 301);
+                    EventLogger.logEvent(EventLogger.getNewFileEvent(n),2);
                     return "Tentative upload effectue";
                 }
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas upload de fichier si t'es pas connect\u00e9";
+                return "Tu ne peux pas upload de fichier si t'es pas connect\u00E9";
             }
         });
 
@@ -200,6 +204,7 @@ public class StartServer {
                         FileCore.delete(fileid);
                         res.status(201);
                         res.redirect("/", 301);
+                        EventLogger.logEvent(EventLogger.getFileEvent(fileid,"supprim\u00E9"),2);
                         return "Tentative suppression effectue";
                     }
                     else{
@@ -210,7 +215,7 @@ public class StartServer {
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas supprimer de fichier si t'es pas connect\u00e9";
+                return "Tu ne peux pas supprimer de fichier si t'es pas connect\u00E9";
             }
         });
 
@@ -228,6 +233,7 @@ public class StartServer {
                         FileCore.rename(fileid,newname);
                         res.status(201);
                         res.redirect("/", 301);
+                        EventLogger.logEvent(EventLogger.getFileEvent(fileid,"renomm\u00E9"),2);
                         return "Tentative renommage effectue";
                     }
                     else{
@@ -238,7 +244,7 @@ public class StartServer {
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas renommer de fichier si t'es pas connect\u00e9";
+                return "Tu ne peux pas renommer de fichier si t'es pas connect\u00E9";
             }
         });
 
@@ -247,7 +253,7 @@ public class StartServer {
             if(doLogin.isLogged(req.cookie("auth"))){
                 if(CleanSecurity.isBanned(req.cookie("auth"))){
                     res.redirect("/troll", 301);
-                    return "Tu ne peux pas t\u00e9l\u00e9charger de fichier si t'es ban";
+                    return "Tu ne peux pas t\u00E9l\u00E9charger de fichier si t'es ban";
                 }
                 else{
                     int fileid = Integer.parseInt(req.params(":id"));
@@ -270,26 +276,29 @@ public class StartServer {
                         }
                         res.status(201);
                         res.redirect("/", 301);
+                        EventLogger.logEvent(EventLogger.getFileEvent(fileid,"t\u00E9l\u00E9charg\u00E9"),2);
                         return "Tentative download effectue";
                     }
                     else{
                         res.status(401);
-                        return "Tu ne peux pas t\u00e9l\u00e9charger un fichier qui ne t'appartiens pas";
+                        return "Tu ne peux pas t\u00E9l\u00E9charger un fichier qui ne t'appartiens pas";
                     }                    
                 }
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas t\u00e9l\u00e9charger de fichier si t'es pas connect\u00e9";
+                return "Tu ne peux pas t\u00E9l\u00E9charger de fichier si t'es pas connect\u00E9";
             }
         });
 
         // Requête ban user
         post("/ban/:id", (req, res) -> {
             if(CleanSecurity.isAdmin(req.cookie("auth"))){
+                String bannedUser = req.params(":id");
                 res.type("application/json");
-                UserCore.ban(req.params(":id"));
+                UserCore.ban(bannedUser);
                 res.redirect("/admin", 301);
+                EventLogger.logEvent(EventLogger.getBanEvent(bannedUser,true),1);
                 return "User Banned";
             }
             else{
@@ -301,9 +310,11 @@ public class StartServer {
         // Requête unban user 
         post("/unban/:id", (req, res) -> {
             if(CleanSecurity.isAdmin(req.cookie("auth"))){
+                String bannedUser = req.params(":id");
                 res.type("application/json");
-                UserCore.unban(req.params(":id"));
+                UserCore.unban(bannedUser);
                 res.redirect("/admin", 301);
+                EventLogger.logEvent(EventLogger.getBanEvent(bannedUser,false),1);
                 return "User Unbanned";
             }
             else{
