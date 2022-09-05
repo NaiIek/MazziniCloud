@@ -16,8 +16,8 @@ public class _Initializer {
             statement = connection.prepareStatement("DROP TABLE IF EXISTS users; ");
             statement.executeUpdate();
             System.out.println("Oublie pas de recommenter le drop table");
-            */
-            /*
+            
+            
             statement = connection.prepareStatement("DROP TABLE IF EXISTS attachment; ");
             statement.executeUpdate();
             System.out.println("Oublie pas de recommenter le drop table");
@@ -42,7 +42,7 @@ public class _Initializer {
             statement.executeUpdate();
             */
 
-            System.out.println("Initialisation Database terminée");
+            System.out.println("Initialisation Database termin\u00e9e");
         } catch (Exception e){
             System.out.println(e.toString());
             throw new RuntimeException("could not create database !");

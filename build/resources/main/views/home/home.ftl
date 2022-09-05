@@ -6,7 +6,7 @@
             <div id="PageContent">
                 <h2>Ajouter des fichiers</h2>
                 <form action="/addfile" method="POST" enctype="multipart/form-data">
-                    <div class="forminput"><input type="file" name="uploaded_file" id="uploaded_file" accept=".zip,.c,.py,.java,.txt,.pdf,.doc,.docx,.xls,.xlsx,image/*,video/*,audio/*" required></div>                
+                    <div class="forminput"><input type="file" name="uploaded_file" id="uploaded_file" accept=".zip,.rar,.c,.py,.java,.txt,.pdf,.doc,.docx,.xls,.xlsx,image/*,video/*,audio/*" required></div>                
                     <div class="forminput">
                         <button type="submit">Uploader</button>
                         <input class="boutons" type="reset" value="Annuler">

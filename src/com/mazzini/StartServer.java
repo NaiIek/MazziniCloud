@@ -32,8 +32,12 @@ public class StartServer {
 
     public static void main(String[] args) {
         //Configure Spark
+        String keyStoreLocation = "deploy/letsencrypt.jks";
+        String keyStorePassword = "mysuperpassword";
+        
         staticFiles.location("/static/");
         port(8081);
+        secure(keyStoreLocation, keyStorePassword, null, null);
         _Initializer.Init();
 
         /********************************/
@@ -43,7 +47,7 @@ public class StartServer {
 
         //Requête acceuil
         get("/", (req, res) -> {
-            String n = "Non connecté";
+            String n = "Non connect\u00e9";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 int id = Integer.parseInt(doLogin.introspect(req.cookie("auth")).get("id"));
@@ -64,7 +68,7 @@ public class StartServer {
 
         //Requête page a propos        
         get("/sujet", (req, res) -> {
-            String n = "Non connecté";
+            String n = "Non connect\u00e9";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 if(CleanSecurity.isAdmin(req.cookie("auth"))){
@@ -124,13 +128,13 @@ public class StartServer {
             String n = req.queryParams("name");
             if(CleanSecurity.existN(n)){
                 res.status(400);
-                return "Le nom est déjà utilisé";
+                return "Le nom est d\u00e9jà utilis\u00e9";
             }
             else{
                 String e = req.queryParams("email");
                 if(CleanSecurity.existM(e)){
                     res.status(400);
-                    return "Le mail est déjà utilisé";
+                    return "Le mail est d\u00e9jà utilis\u00e9";
                 }
                 else{
                     String p = DirtySecurity.encrypt(req.queryParams("password")); 
@@ -138,7 +142,7 @@ public class StartServer {
                     user = new Gson().fromJson(r, UserEntity.class);            
                     UserCore.create(user);
                     res.redirect("/login", 301);          
-                    return "Creation du compte utilisateur réalisé avec succès";
+                    return "Creation du compte utilisateur r\u00e9alis\u00e9 avec succès";
                 }
             }
         });  
@@ -154,7 +158,7 @@ public class StartServer {
             r = doLogin.tryLogin(user);
             res.cookie("/","auth",r,3600,true,true);
             res.redirect("/", 301);
-            return "Essai de Login effectué";
+            return "Essai de Login effectu\u00e9";
         });     
 
         // Requête création file
@@ -179,7 +183,7 @@ public class StartServer {
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas upload de fichier si t'es pas connecté";
+                return "Tu ne peux pas upload de fichier si t'es pas connect\u00e9";
             }
         });
 
@@ -206,7 +210,7 @@ public class StartServer {
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas supprimer de fichier si t'es pas connecté";
+                return "Tu ne peux pas supprimer de fichier si t'es pas connect\u00e9";
             }
         });
 
@@ -234,7 +238,7 @@ public class StartServer {
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas renommer de fichier si t'es pas connecté";
+                return "Tu ne peux pas renommer de fichier si t'es pas connect\u00e9";
             }
         });
 
@@ -243,7 +247,7 @@ public class StartServer {
             if(doLogin.isLogged(req.cookie("auth"))){
                 if(CleanSecurity.isBanned(req.cookie("auth"))){
                     res.redirect("/troll", 301);
-                    return "Tu ne peux pas télécharger de fichier si t'es ban";
+                    return "Tu ne peux pas t\u00e9l\u00e9charger de fichier si t'es ban";
                 }
                 else{
                     int fileid = Integer.parseInt(req.params(":id"));
@@ -270,13 +274,13 @@ public class StartServer {
                     }
                     else{
                         res.status(401);
-                        return "Tu ne peux pas télécharger un fichier qui ne t'appartiens pas";
+                        return "Tu ne peux pas t\u00e9l\u00e9charger un fichier qui ne t'appartiens pas";
                     }                    
                 }
             }
             else{
                 res.status(401);
-                return "Tu ne peux pas télécharger de fichier si t'es pas connecté";
+                return "Tu ne peux pas t\u00e9l\u00e9charger de fichier si t'es pas connect\u00e9";
             }
         });
 
@@ -320,6 +324,11 @@ public class StartServer {
             res.status(418);
             return "Error <418> I'm a teapot!";
         });
+
+        //Requête certificat
+        //get("/.well-known/acme-challenge/wSlYu4CjvHfRYDS46LCUPICkzCXqvV1dbB5OiJsgwnc", (req, res) -> {
+        //    return "wSlYu4CjvHfRYDS46LCUPICkzCXqvV1dbB5OiJsgwnc.c0PEIAgCANLJPrnK-oa6FYrt2U9floeMtGTuy-utW3A";
+        //});
 
         /********************************/
         /*          Requêtes API        */
