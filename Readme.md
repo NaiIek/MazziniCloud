@@ -67,6 +67,8 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [x] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
 
+- [ ] Faire un endpoint desinscription -> delete de toutes les données liées à l'utilisateur
+
 - [ ] Faire des logs serveurs (connexion/deconnection/inscription/upload/filesize/download)
 
 - [ ] Fonctionnalité CRUD sur un "dossier" (path en BDD)
