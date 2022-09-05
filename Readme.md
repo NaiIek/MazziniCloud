@@ -69,7 +69,7 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [ ] Faire un endpoint desinscription -> delete de toutes les données liées à l'utilisateur
 
-- [ ] Faire des logs serveurs (connexion/deconnection/inscription/upload/filesize/download)
+- [x] Faire des logs basique serveur (connexion/deconnection/inscription/upload/filesize/download)
 
 - [ ] Fonctionnalité CRUD sur un "dossier" (path en BDD)
 
