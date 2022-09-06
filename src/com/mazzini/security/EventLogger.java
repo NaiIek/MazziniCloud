@@ -29,14 +29,14 @@ public class EventLogger{
                         StandardOpenOption.APPEND);
         }
         catch(IOException e){
-            System.out.println("File does not exists");
+            System.out.println("ERROR: Log file does not exists");
         }
         if(logPriority == 1){System.out.println(fullLog);}
     }
 
     private static String getCurrentTime(){
         Date date = Calendar.getInstance().getTime();  
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = dateFormat.format(date); 
         return strDate;
     }
@@ -67,8 +67,12 @@ public class EventLogger{
         return name + " s'est inscrit"; 
     }
 
-    public static String getNewFileEvent(String name){
-        return name + " a ajout\u00E9 un fichier";
+    public static String getUnregisterEvent(String name){
+        return name + " s'est d\u00E9sinscrit"; 
+    }
+
+    public static String getNewFileEvent(int authorid){
+        return authorid + " a ajout\u00E9 un fichier";
     }
 
     public static String getFileEvent(int fileid, String action){

@@ -16,7 +16,7 @@
         <#if isLogged>
             <p>connecté en tant que: ${username}</p>
             <#else>
-                <p>${username}</p>
+                <p>Non connecté</p>
         </#if>
         <nav id="headNav">
             <ul>

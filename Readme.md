@@ -7,7 +7,18 @@ Le projet est un simple serveur de stockage de fichiers. Je me base sur un modè
 ---
 ## **Démarrage**
 
-Dans un bash, executer `./gradlew run`
+Dans un bash Linux, executer `./gradlew run`  
+Dans un cmd Windows, executer `gradlew run`  
+**Attention:** lancer le programme depuis WSL fonctionnera mais le port ne sera pas ouvert de
+l'exterieur (seul le https localhost fonctionnera)
+
+---
+## **Setup https**
+
+Pour mettre en place le https, j'ai suivi ce [tutoriel](https://srimalfernando.medium.com/ssl-for-java-spark-framework-on-jetty-deployed-in-a-docker-container-eda93657d13) 
+qui s'adapte bien a la config, j'ai stocké mes certificats dans un dossier deploy à la racine
+qui n'est pas présent sur ce git pour insister sur le fait que chacun doit utiliser ses propres
+certificats et que vous ne pourrez de toute façon pas utiliser mes certificats.
 
 ---
 ## **Technos**
@@ -30,7 +41,7 @@ Pour le côté serveur:
 
 4. **JWT** pour la gestion de l'authentification et des accès.
 
-5. **Cipher** pour un encryptage basique et sale des password en BDD.
+5. **Cipher** pour un encryptage basique et save des password en BDD.
 
 6. **Gson** pour sérialiser facilement des input en **Json** et désérialiser des output
 
@@ -67,7 +78,7 @@ Chaque fichier est stocké en base avec un id, l'id de son auteur/propriétaire,
 
 - [x] Ajout de string "path"  (260 caractères) dans la BDD des fichiers pour gérer un affichage sous forme de dossier, sous dossier... en fonction de ce que souhaite l'utilisateur sur sa page HTML dans son navigateur.
 
-- [ ] Faire un endpoint desinscription -> delete de toutes les données liées à l'utilisateur
+- [x] Faire un endpoint desinscription -> delete de toutes les données liées à l'utilisateur
 
 - [x] Faire des logs basique serveur (connexion/deconnection/inscription/upload/filesize/download)
 

@@ -48,7 +48,7 @@ public class StartServer {
 
         //Requête acceuil
         get("/", (req, res) -> {
-            String n = "Non connect\u00E9";
+            String n = "";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 int id = Integer.parseInt(doLogin.introspect(req.cookie("auth")).get("id"));
@@ -69,7 +69,7 @@ public class StartServer {
 
         //Requête page a propos        
         get("/sujet", (req, res) -> {
-            String n = "Non connect\u00E9";
+            String n = "";
             if(doLogin.isLogged(req.cookie("auth"))){
                 n = doLogin.getLoggedName(req.cookie("auth"));
                 if(CleanSecurity.isAdmin(req.cookie("auth"))){
@@ -91,6 +91,26 @@ public class StartServer {
         get("/register", (req, res) -> {
             res.status(200);
             return RegisterGUI.getRegister();
+        });
+
+        //Requête page desinscription        
+        get("/unregister", (req, res) -> {
+            String n = "";
+            if(doLogin.isLogged(req.cookie("auth"))){
+                n = doLogin.getLoggedName(req.cookie("auth"));
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
+                    res.status(200);
+                    return RegisterGUI.getUnregister(true, true, n);
+                }
+                else{
+                    res.status(200);
+                    return RegisterGUI.getUnregister(true, false, n);
+                }                
+            }
+            else{
+                res.status(200);
+                return RegisterGUI.getUnregister(false, false, n);
+            }
         });
 
         //Requête page connexion
@@ -147,7 +167,26 @@ public class StartServer {
                     return "Creation du compte utilisateur r\u00E9alis\u00E9 avec succès";
                 }
             }
-        });  
+        });
+        
+        //Requête desinscription              
+        post("/unregister/try", (req, res) ->{           
+            if(doLogin.isLogged(req.cookie("auth"))){
+                UserEntity user = new UserEntity();
+                String n = doLogin.getLoggedName(req.cookie("auth"));
+                int id = Integer.parseInt(doLogin.introspect(req.cookie("auth")).get("id"));
+                String r = "{'name' : '" + n + "', 'id' : '" + id + "' }";
+                user = new Gson().fromJson(r, UserEntity.class); 
+                UserCore.delete(user);
+                res.redirect("/logout", 301);
+                EventLogger.logEvent(EventLogger.getUnregisterEvent(n),1);         
+                return "Suppression du compte utilisateur r\u00E9alis\u00E9 avec succès";
+            }
+            else{
+                res.status(401);                
+                return "Error <401> Unauthorized";
+            }
+        });
 
         //Requête connexion                    
         post("/login/try", (req, res) ->{
@@ -181,7 +220,7 @@ public class StartServer {
                     FileCore.create(authorid, n, input, inputSize);
                     res.status(201);
                     res.redirect("/", 301);
-                    EventLogger.logEvent(EventLogger.getNewFileEvent(n),2);
+                    EventLogger.logEvent(EventLogger.getNewFileEvent(authorid),2);
                     return "Tentative upload effectue";
                 }
             }

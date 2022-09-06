@@ -8,6 +8,9 @@
                 <a id="contact" href = "https://discord.gg/wjWG74H"><img class="icon" src="/image/discord.png" alt="Lien discord Fire_Ace Team"></a>
                 <a id="contact" href="/coffee"><img class="icon" src="/image/cofee.png"></a>
             </nav>
-            <p> &copy; 2021 tous droits reservés </p>
+            <#if isLogged>
+                <a id="unregister" href="/unregister">se désinscrire</a>
+            </#if>
+            <p> &copy; 2022 tous droits reservés </p>
     </footer>
 </html>
