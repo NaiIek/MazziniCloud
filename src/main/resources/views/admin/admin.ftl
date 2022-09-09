@@ -12,6 +12,7 @@
                     <p>Banned : ${user.isBanned}</p>
                     <#assign ban_link = "/ban/${user.id}">
                     <#assign unban_link = "/unban/${user.id}">
+                    <#assign view_files_link = "/admin/viewfiles/${user.id}">
                     <#if user.isBanned != 1>
                         <form action="${ban_link}" method="POST">
                             <input type="submit" value="Ban">
@@ -20,7 +21,10 @@
                         <form action="${unban_link}" method="POST">
                             <input type="submit" value="Unban">
                         </form>
-                    </#if>                  
+                    </#if>
+                    <form action="${view_files_link}" method="GET">
+                        <input type="submit" value="View Files">
+                    </form>                  
                 </div>
             </#list> 
         </#if>     

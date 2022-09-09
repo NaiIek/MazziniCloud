@@ -20,7 +20,7 @@
         </#if>
         <nav id="headNav">
             <ul>
-                <li id="linkNav"><a href="/">Acceuil</a></li>
+                <li id="linkNav"><a href="/">Accueil</a></li>
                 <li id="linkNav"><a href="/sujet">A propos</a></li>
                 <#if isLogged>
                     <li id="linkNav"><a href="/logout">Déconnexion</a></li>

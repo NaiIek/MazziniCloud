@@ -1,5 +1,5 @@
-com/mazzini/gui/AdminGUI.java
- com.mazzini.gui.AdminGUI
+com/mazzini/gui/RegisterGUI.java
+ com.mazzini.gui.RegisterGUI
 com/mazzini/security/CleanSecurity.java
  com.mazzini.security.CleanSecurity
 com/mazzini/dao/_Generic.java
@@ -32,8 +32,8 @@ com/mazzini/security/DirtySecurity.java
  com.mazzini.security.DirtySecurity
 com/mazzini/gui/LoginGUI.java
  com.mazzini.gui.LoginGUI
-com/mazzini/gui/RegisterGUI.java
- com.mazzini.gui.RegisterGUI
+com/mazzini/gui/AdminGUI.java
+ com.mazzini.gui.AdminGUI
 com/mazzini/gui/_FreeMarkerInitializer.java
  com.mazzini.gui._FreeMarkerInitializer
 com/mazzini/StartServer.java

@@ -34,13 +34,12 @@
                         </form>
                     </div>
                 </#list>
-                <p>feature à implémenter (renommer fichier)</p>
             </div>
-            <#else>
-                <div id="PageContent">
-                    <h2>Bienvenue sur le Mazzini Cloud</h2>
-                    <p>Une fois connectés, vous retrouverez ici la possibilité de stocker et consulter vos fichiers.</p>
-                </div>
+        <#else>
+            <div id="PageContent">
+                <h2>Bienvenue sur le Mazzland Cloud Service</h2>
+                <p>Une fois connectés, vous retrouverez ici la possibilité de stocker et consulter vos fichiers.</p>
+            </div>
         </#if>
     </body>
 </html>

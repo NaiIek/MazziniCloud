@@ -76,6 +76,6 @@ public class EventLogger{
     }
 
     public static String getFileEvent(int fileid, String action){
-        return "Le fichier " + fileid + " a \u00E9t\u00E9" + action + " par un utilisateur";
+        return "Le fichier " + fileid + " a \u00E9t\u00E9 " + action + " par un utilisateur";
     }
 }

@@ -128,13 +128,33 @@ public class StartServer {
                     return AdminGUI.getAllUsers(n);
                 }
                 else{
-                    res.status(404);
-                    return "Error <404>";
+                    res.status(401);
+                    return "Error <401> unauthorized";
                 }
             }
             else{
-                res.status(404);                
-                return "Error <404>";
+                res.status(401);                
+                return "Error <401> unauthorized";
+            }
+        });
+
+        //Requête page admin modération fichiers
+        get("/admin/viewfiles/:id", (req, res) ->{
+            if(doLogin.isLogged(req.cookie("auth"))){
+                if(CleanSecurity.isAdmin(req.cookie("auth"))){
+                    String n = doLogin.getLoggedName(req.cookie("auth"));
+                    int userid = Integer.parseInt(req.params(":id"));
+                    res.status(200);
+                    return AdminGUI.getUserFilesView(true, true, n, userid);
+                }
+                else{
+                    res.status(401);
+                    return "Error <401> unauthorized";
+                }
+            }
+            else{
+                res.status(401);                
+                return "Error <401> unauthorized";
             }
         });
 

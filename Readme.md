@@ -1,4 +1,4 @@
-# **Mazzini Cloud (nom à potentiellement changer)**
+# **Mazzland**
 
 ## **Projet**
 

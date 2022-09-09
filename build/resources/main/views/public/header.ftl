@@ -6,13 +6,13 @@
         <meta name="author" content="Mazzini Kelian" />
         <meta name="description" content="Page web du serveur de fichiers Mazzini" />
 
-        <title>Mazzini Cloud</title>
+        <title>Mazzland</title>
         <link rel="shortcut icon" href="/image/mazzinicon.png" type="image/png"/>
         <link rel="stylesheet" href="/reset.css" />
         <link rel="stylesheet" media="screen" href="/style.css" />
     </head>
     <header>
-        <h1>Mazzini Cloud</h1>
+        <h1>Mazzland</h1>
         <#if isLogged>
             <p>connecté en tant que: ${username}</p>
             <#else>
@@ -20,7 +20,7 @@
         </#if>
         <nav id="headNav">
             <ul>
-                <li id="linkNav"><a href="/">Acceuil</a></li>
+                <li id="linkNav"><a href="/">Accueil</a></li>
                 <li id="linkNav"><a href="/sujet">A propos</a></li>
                 <#if isLogged>
                     <li id="linkNav"><a href="/logout">Déconnexion</a></li>
