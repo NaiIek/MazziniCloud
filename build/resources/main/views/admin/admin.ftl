@@ -3,11 +3,17 @@
 <html lang="fr-FR">
     <body xmlns="http://www.w3.org/1999/html">
         <#if isAdmin>
+            <div id="PageContent">
+                <h2>Page D'administration</h2>
+                <p> Nombre d'inscrits : ${users?size}</p>
+                <p> Stockage global : ${globalStorage} bytes</p>
+            </div>
             <#list users as user>
                 <div id="PageContent">
                     <h2><span class="user_id">#${user.id}</span> ${user.name}</h2>
                     <p>Mail: ${user.email}</p>
                     <p>MDP : ${user.pwd}</p>
+                    <p>Storage size : ${user.storageSize} bytes</p>
                     <p>Admin : ${user.isAdmin}</p>
                     <p>Banned : ${user.isBanned}</p>
                     <#assign ban_link = "/ban/${user.id}">

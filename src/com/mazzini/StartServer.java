@@ -180,7 +180,8 @@ public class StartServer {
                 else{
                     String p = DirtySecurity.encrypt(req.queryParams("password")); 
                     String r = convertToJsonReg(n,e,p);
-                    user = new Gson().fromJson(r, UserEntity.class);            
+                    user = new Gson().fromJson(r, UserEntity.class);
+                    user.setStorageSize(0L);            
                     UserCore.create(user);
                     res.redirect("/login", 301);
                     EventLogger.logEvent(EventLogger.getRegisterEvent(n),1);         
@@ -236,8 +237,9 @@ public class StartServer {
                     req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
                     String n = req.raw().getPart("uploaded_file").getSubmittedFileName();
                     InputStream input = req.raw().getPart("uploaded_file").getInputStream();
-                    long inputSize = req.raw().getPart("uploaded_file").getSize();
+                    long inputSize = req.raw().getPart("uploaded_file").getSize()+2048; // 2048 bytes added in count for security and other stored values in db
                     FileCore.create(authorid, n, input, inputSize);
+                    UserCore.updateStorage(authorid, inputSize, "+");
                     res.status(201);
                     res.redirect("/", 301);
                     EventLogger.logEvent(EventLogger.getNewFileEvent(authorid),2);
@@ -260,6 +262,7 @@ public class StartServer {
                 else{
                     int fileid = Integer.parseInt(req.params(":id"));
                     if(CleanSecurity.isOwner(req.cookie("auth"),fileid) || CleanSecurity.isAdmin(req.cookie("auth"))){
+                        UserCore.updateStorage(FileCore.getAuthorId(fileid), FileCore.getFileSize(fileid), "-");
                         FileCore.delete(fileid);
                         res.status(201);
                         res.redirect("/", 301);

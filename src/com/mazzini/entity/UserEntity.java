@@ -5,6 +5,7 @@ public class UserEntity {
     private String email;
     private String password;
     private int id;
+    private long storageSize;
     private int isAdmin;
     private int isBanned;
     
@@ -16,6 +17,7 @@ public class UserEntity {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.storageSize = 0L;
     }
 
     public int getId(){
@@ -48,6 +50,14 @@ public class UserEntity {
 
     public void setPwd(String password){
         this.password = password;
+    }
+
+    public long getStorageSize(){
+        return storageSize;
+    }
+
+    public void setStorageSize(long newSize){
+        this.storageSize = newSize;
     }
 
     public int getIsAdmin(){

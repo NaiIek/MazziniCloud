@@ -35,4 +35,20 @@ public class UserCore {
         int i = Integer.parseInt(id);
         new UserDAO().unban(i);
     }
+
+    public static long getUserStorage(int userId){
+        return new UserDAO().getUserSize(userId);
+    }
+
+    public static void updateStorage(int userId, long updateSize, String operation){
+        if (operation == "+"){
+            new UserDAO().addData(userId, updateSize);
+        }
+        else if (operation == "-"){
+            new UserDAO().removeData(userId, updateSize);
+        }
+        else{
+            System.out.println("Une erreur est survenue sur l'update storage d'un utilisateur\n"); //TODO : log
+        }
+    }
 }

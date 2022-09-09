@@ -24,7 +24,7 @@ public class _Initializer {
             */
 
             //Init users table
-            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id int primary key auto_increment, name varchar(100), email varchar(100), pwd varchar(100), isAdmin int, isBanned int); ");
+            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id int primary key auto_increment, name varchar(100), email varchar(100), pwd varchar(100), storageSize long, isAdmin int, isBanned int); ");
             statement.executeUpdate();
             
             //Init attachment files Table (ajouter potentiel feature de path)

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
+import com.mazzini.core.UserCore;
 import com.mazzini.core.FileCore;
 import com.mazzini.entity.FileEntity;
 
@@ -23,12 +24,8 @@ public class HomeGUI {
         input.put("isLogged", log);
         input.put("isAdmin", adm);
         input.put("username", name);
-
-        ArrayList<FileEntity> entities = FileCore.getAllFiles(id);
-        input.put("files", entities);
-
-        Long storageSize = FileCore.getAllFilesSize(entities);
-        input.put("storageSize", storageSize);
+        input.put("files", FileCore.getAllFiles(id));
+        input.put("storageSize", UserCore.getUserStorage(id));
 
         Writer output = new StringWriter();
         Template template = configuration.getTemplate("home/home.ftl");

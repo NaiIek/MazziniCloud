@@ -13,7 +13,7 @@ public class FileCore {
     }
 
     public static FileEntity create(int authorid, String filename, InputStream filedata, long inputSize){
-        FileEntity f = new FileEntity(authorid,filename,filedata,inputSize+2048); // 2048 bytes added in count for security and other stored values in db
+        FileEntity f = new FileEntity(authorid,filename,filedata,inputSize);
         return new FileDAO().create(f);
     }
 
@@ -44,11 +44,19 @@ public class FileCore {
         new FileDAO().delete(f);
     }
 
-    public static Long getAllFilesSize(ArrayList<FileEntity> fileList){
-        Long filesSize = Long.valueOf(0);
+    public static long getAllFilesSize(ArrayList<FileEntity> fileList){
+        long filesSize = 0L;
         for (FileEntity f : fileList){
             filesSize += f.getStorageSize();
         }
         return filesSize;
+    }
+
+    public static int getAuthorId(int fileId){
+        return new FileDAO().getOwnerId(fileId);
+    }
+
+    public static long getFileSize(int fileId){
+        return new FileDAO().getFileSize(fileId);
     }
 }

@@ -1,6 +1,10 @@
 package com.mazzini.gui;
 
 import com.mazzini.core.UserCore;
+import com.mazzini.core.FileCore;
+import com.mazzini.entity.UserEntity;
+import com.mazzini.entity.FileEntity;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -12,19 +16,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
-import com.mazzini.core.FileCore;
-import com.mazzini.entity.FileEntity;
-
 public class AdminGUI {
     public static String getAllUsers(String name) throws IOException, TemplateException {
         Configuration configuration = _FreeMarkerInitializer.getContext();
 
         Map<String, Object> input = new HashMap<>();
 
-        input.put("users", UserCore.getAllUsers());
+        ArrayList<UserEntity> users = UserCore.getAllUsers();
+        input.put("users", users);
         input.put("isLogged", true);
         input.put("isAdmin", true);
         input.put("username", name);
+
+        long globalStorage = 0L;
+        for (UserEntity user : users){
+            globalStorage += user.getStorageSize();
+        }
+        input.put("globalStorage", globalStorage);
+
         Writer output = new StringWriter();
         Template template = configuration.getTemplate("admin/admin.ftl");
         template.setOutputEncoding("UTF-8");
@@ -41,12 +50,8 @@ public class AdminGUI {
         input.put("isLogged", log);
         input.put("isAdmin", adm);
         input.put("username", name);
-
-        ArrayList<FileEntity> entities = FileCore.getAllFiles(id);
-        input.put("files", entities);
-
-        Long storageSize = FileCore.getAllFilesSize(entities);
-        input.put("storageSize", storageSize);
+        input.put("files", FileCore.getAllFiles(id));
+        input.put("storageSize", UserCore.getUserStorage(id));
 
         Writer output = new StringWriter();
         Template template = configuration.getTemplate("admin/admin-view-files.ftl");

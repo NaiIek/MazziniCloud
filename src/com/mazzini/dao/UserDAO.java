@@ -19,6 +19,7 @@ public class UserDAO extends _Generic<UserEntity> {
                 entity.setName(resultSet.getString("name"));
                 entity.setEmail(resultSet.getString("email"));
                 entity.setPwd(resultSet.getString("pwd"));
+                entity.setStorageSize(resultSet.getLong("storageSize"));
                 entity.setAdmin(resultSet.getInt("isAdmin"));
                 entity.setBanned(resultSet.getInt("isBanned"));
 
@@ -43,6 +44,7 @@ public class UserDAO extends _Generic<UserEntity> {
                 entity.setName(resultSet.getString("name"));
                 entity.setEmail(resultSet.getString("email"));
                 entity.setPwd(resultSet.getString("pwd"));
+                entity.setStorageSize(resultSet.getLong("storageSize"));
                 entity.setAdmin(resultSet.getInt("isAdmin"));
                 entity.setBanned(resultSet.getInt("isBanned"));
             }
@@ -63,6 +65,7 @@ public class UserDAO extends _Generic<UserEntity> {
                 entity.setName(resultSet.getString("name"));
                 entity.setEmail(resultSet.getString("email"));
                 entity.setPwd(resultSet.getString("pwd"));
+                entity.setStorageSize(resultSet.getLong("storageSize"));
                 entity.setAdmin(resultSet.getInt("isAdmin"));
                 entity.setBanned(resultSet.getInt("isBanned"));
             }
@@ -154,15 +157,61 @@ public class UserDAO extends _Generic<UserEntity> {
         }
     }
 
+    public long getUserSize(int u){
+        long size = -1L;
+        try {
+            PreparedStatement preparedStatement = this.connect.prepareStatement("SELECT storageSize FROM users WHERE id = ?;");
+            preparedStatement.setInt(1, u);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                size = resultSet.getLong("storageSize");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return size;
+    }
+
+    public void addData(int u, long size){
+        long old_size = getUserSize(u);
+        if(old_size < 0){
+            System.out.println("Something went wrong with a user storage");
+        }
+        try {
+            PreparedStatement preparedStatement = this.connect.prepareStatement("UPDATE users SET storageSize = ? WHERE id = ?;");
+            preparedStatement.setLong(1, old_size + size);
+            preparedStatement.setInt(2, u);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeData(int u, long size){
+        long new_size = getUserSize(u) - size;
+        if(new_size < 0){
+            System.out.println("Something went wrong with a user storage");
+        }
+        try {
+            PreparedStatement preparedStatement = this.connect.prepareStatement("UPDATE users SET storageSize = ? WHERE id = ?;");
+            preparedStatement.setLong(1, new_size);
+            preparedStatement.setInt(2, u);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public UserEntity create(UserEntity obj) {
         try {
-            PreparedStatement preparedStatement = this.connect.prepareStatement("INSERT INTO users(name, email, pwd, isAdmin, isBanned) " + "VALUES (?, ?, ?, ?, ?);");
+            PreparedStatement preparedStatement = this.connect.prepareStatement("INSERT INTO users(name, email, pwd, storageSize, isAdmin, isBanned) " + "VALUES (?, ?, ?, ?, ?, ?);");
             preparedStatement.setString(1, obj.getName());
             preparedStatement.setString(2, obj.getEmail());
             preparedStatement.setString(3, obj.getPwd());
-            preparedStatement.setInt(4, 0);
+            preparedStatement.setLong(4, obj.getStorageSize());
             preparedStatement.setInt(5, 0);
+            preparedStatement.setInt(6, 0);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

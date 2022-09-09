@@ -68,6 +68,36 @@ public class FileDAO extends _Generic<FileEntity> {
         return f;
     }
 
+    public int getOwnerId(int fileId){
+        int authorid = -1;
+        try {
+            PreparedStatement preparedStatement = this.connect.prepareStatement("SELECT authorid FROM attachment WHERE id = ?;");
+            preparedStatement.setInt(1, fileId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                authorid = resultSet.getInt("authorid");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return authorid;
+    }
+
+    public long getFileSize(int fileId){
+        long filesize = -1L;
+        try {
+            PreparedStatement preparedStatement = this.connect.prepareStatement("SELECT storageSize FROM attachment WHERE id = ?;");
+            preparedStatement.setInt(1, fileId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                filesize = resultSet.getLong("storageSize");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return filesize;
+    }
+
     public Boolean isOwner(int userId, int fileId){
         Boolean res = false;
         FileEntity f = getFileById(fileId);
