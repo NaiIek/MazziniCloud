@@ -36,7 +36,7 @@ public class _Initializer {
             String pwd = DirtySecurity.encrypt("YourAdminPwd");
             statement = connection.prepareStatement("INSERT INTO users(name, email, pwd, isAdmin) VALUES(?,?,?,?);");
             statement.setString(1, "YourAdminUsername");
-            statement.setString(2, "YourName@mazzinicloud.com");
+            statement.setString(2, "YourName@mazzland.fr");
             statement.setString(3, pwd);
             statement.setInt(4, 1);
             statement.executeUpdate();

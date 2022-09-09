@@ -6,9 +6,11 @@
             <#if isAdmin>
                 <div id="PageContent">
                     <h2>Stockage Utilisateur</h2>
+                    <p>Poids approximatif de ses fichiers: ${storageSize} bytes</p>
                     <#list files as file>
                         <div id="FileContent">
                             <p>Fichier: ${file.getFileName()}</p>
+                            <p>Poids: ${file.getStorageSize()} bytes</p>
                             <#assign rnm_link = "/rnmfile/${file.id}">
                             <form action="${rnm_link}" method="POST">
                                 <div class="forminput"><input type="text" placeholder="Nouveau nom" name="rename" required></div>

@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class FileCore {
 
-    public static ArrayList<FileEntity> getAllFiles(int authorid) {
+    public static ArrayList<FileEntity> getAllFiles(int authorid){
         return new FileDAO().getAllFiles(authorid);
     }
 
@@ -42,5 +42,13 @@ public class FileCore {
         FileEntity f = new FileEntity();
         f.setId(fileId);
         new FileDAO().delete(f);
+    }
+
+    public static Long getAllFilesSize(ArrayList<FileEntity> fileList){
+        Long filesSize = Long.valueOf(0);
+        for (FileEntity f : fileList){
+            filesSize += f.getStorageSize();
+        }
+        return filesSize;
     }
 }

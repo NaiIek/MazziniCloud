@@ -21,6 +21,7 @@ public class FileDAO extends _Generic<FileEntity> {
                     entity.setAuthorId(resultSet.getInt("authorid"));
                     entity.setFileName(resultSet.getString("filename"));
                     entity.setFilePath(resultSet.getString("filepath"));
+                    entity.setStorageSize(resultSet.getLong("storageSize"));
                     entities.add(entity);
                 }
             } catch (SQLException e) {

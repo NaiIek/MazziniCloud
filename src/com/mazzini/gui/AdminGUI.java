@@ -45,6 +45,9 @@ public class AdminGUI {
         ArrayList<FileEntity> entities = FileCore.getAllFiles(id);
         input.put("files", entities);
 
+        Long storageSize = FileCore.getAllFilesSize(entities);
+        input.put("storageSize", storageSize);
+
         Writer output = new StringWriter();
         Template template = configuration.getTemplate("admin/admin-view-files.ftl");
         template.setOutputEncoding("UTF-8");
